@@ -34,11 +34,11 @@ const skills = ["Python", "SQL", "TensorFlow", "Scikit-Learn", "Pandas", "NumPy"
 
 export default function Home() {
   return (
-    <div className="max-w-2xl mx-auto px-8">
+    <div className="max-w-2xl mx-auto px-6">
 
       {/* Hero */}
-      <section className="py-28">
-        <h1 className="font-serif text-6xl font-bold text-gray-900 mb-1 leading-tight">
+      <section className="py-20 sm:py-28">
+        <h1 className="font-serif text-4xl sm:text-6xl font-bold text-gray-900 mb-1 leading-tight">
           <Typewriter text="👋  Hi there! I'm Alan" />
         </h1>
         <p className="text-sm text-gray-400 mb-5">Hongyao Shao</p>
@@ -46,7 +46,7 @@ export default function Home() {
           Data Science & Business student at Boston University.
           I work at the intersection of data, technology, and business.
         </p>
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-3">
           <a
             href="#projects"
             className="px-6 py-2.5 bg-[#003278] text-white text-sm tracking-wide rounded hover:bg-[#002060] transition-colors"
@@ -71,8 +71,8 @@ export default function Home() {
       </section>
 
       {/* About */}
-      <section id="about" className="py-20">
-        <h2 className="font-serif text-3xl font-bold text-gray-900 mb-8">About</h2>
+      <section id="about" className="py-14 sm:py-20">
+        <h2 className="font-serif text-2xl sm:text-3xl font-bold text-gray-900 mb-8">About</h2>
         <div className="space-y-4 text-gray-500 leading-relaxed mb-10">
           <p>
             I&apos;m a third-year student at Boston University pursuing a B.S. in Data Science and a
@@ -113,8 +113,8 @@ export default function Home() {
       </section>
 
       {/* Projects */}
-      <section id="projects" className="py-20">
-        <h2 className="font-serif text-3xl font-bold text-gray-900 mb-8">Projects</h2>
+      <section id="projects" className="py-14 sm:py-20">
+        <h2 className="font-serif text-2xl sm:text-3xl font-bold text-gray-900 mb-8">Projects</h2>
         <div className="space-y-4">
           {projects.map((project) => (
             <a
@@ -141,8 +141,8 @@ export default function Home() {
       </section>
 
       {/* Contact */}
-      <section id="contact" className="py-20">
-        <h2 className="font-serif text-3xl font-bold text-gray-900 mb-8">Contact</h2>
+      <section id="contact" className="py-14 sm:py-20">
+        <h2 className="font-serif text-2xl sm:text-3xl font-bold text-gray-900 mb-8">Contact</h2>
         <ul className="space-y-5">
           {contactLinks.map(({ label, href, display }) => (
             <li key={label} className="flex items-center gap-6">
