@@ -12,7 +12,7 @@ const COUNTRY_NAMES: Record<string, string> = {
   "070": "Bosnia and Herzegovina", "076": "Brazil", "100": "Bulgaria",
   "104": "Myanmar", "112": "Belarus", "116": "Cambodia", "120": "Cameroon",
   "124": "Canada", "144": "Sri Lanka", "152": "Chile", "156": "China",
-  "158": "Taiwan", "170": "Colombia", "178": "Congo", "180": "DR Congo",
+  "158": "China", "170": "Colombia", "178": "Congo", "180": "DR Congo",
   "188": "Costa Rica", "191": "Croatia", "192": "Cuba", "203": "Czech Republic",
   "208": "Denmark", "214": "Dominican Republic", "218": "Ecuador", "231": "Ethiopia",
   "233": "Estonia", "246": "Finland", "250": "France", "266": "Gabon",
@@ -57,9 +57,16 @@ const WISHLIST = new Set([
   "834", // Tanzania
 ]);
 
+// Countries that should highlight together as one region
+const MERGED_REGIONS: Record<string, string> = {
+  "156": "china-group",
+  "158": "china-group",
+};
+
 export default function WorldMap() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [tooltip, setTooltip] = useState<{ name: string; x: number; y: number } | null>(null);
+  const [hoveredRegion, setHoveredRegion] = useState<string | null>(null);
 
   const handleMouseMove = (name: string, e: React.MouseEvent) => {
     const rect = containerRef.current?.getBoundingClientRect();
@@ -81,7 +88,7 @@ export default function WorldMap() {
       <ComposableMap
         projection="geoNaturalEarth1"
         projectionConfig={{ scale: 165, center: [0, 10] }}
-        style={{ width: "100%", height: "auto", background: "transparent" }}
+        style={{ width: "100%", height: "auto", background: "transparent", marginBottom: "-16px" }}
       >
         <Geographies geography={GEO_URL}>
           {({ geographies }: { geographies: { rsmKey: string; id?: string | number }[] }) =>
@@ -91,25 +98,35 @@ export default function WorldMap() {
               const visited = VISITED.has(id);
               const wishlist = WISHLIST.has(id);
               const name = COUNTRY_NAMES[id] ?? "";
+              const region = MERGED_REGIONS[id];
+              const isHovered = region ? hoveredRegion === region : false;
+              const baseFill = visited ? "#7a0028" : wishlist ? "#f59e0b" : "#003278";
+              const hoverFill = visited ? "#9a0038" : wishlist ? "#d97706" : "#004090";
               return (
                 <Geography
                   key={geo.rsmKey}
                   geography={geo}
-                  fill={visited ? "#7a0028" : wishlist ? "#f59e0b" : "#003278"}
+                  fill={isHovered ? hoverFill : baseFill}
                   stroke="#ffffff"
                   strokeWidth={0.5}
                   strokeOpacity={0.9}
-                  fillOpacity={0.7}
-                  onMouseEnter={(e) => name && handleMouseMove(name, e as unknown as React.MouseEvent)}
-                  onMouseMove={(e) => name && handleMouseMove(name, e as unknown as React.MouseEvent)}
-                  onMouseLeave={() => setTooltip(null)}
+                  fillOpacity={isHovered ? 0.9 : 0.7}
+                  onMouseEnter={(e) => {
+                    if (region) setHoveredRegion(region);
+                    if (name) handleMouseMove(name, e as unknown as React.MouseEvent);
+                  }}
+                  onMouseMove={(e) => {
+                    if (name) handleMouseMove(name, e as unknown as React.MouseEvent);
+                  }}
+                  onMouseLeave={() => {
+                    setHoveredRegion(null);
+                    setTooltip(null);
+                  }}
                   style={{
                     default: { outline: "none" },
-                    hover: {
-                      fill: visited ? "#9a0038" : wishlist ? "#d97706" : "#004090",
-                      outline: "none",
-                      fillOpacity: 0.9,
-                    },
+                    hover: region
+                      ? { outline: "none" }
+                      : { fill: hoverFill, outline: "none", fillOpacity: 0.9 },
                     pressed: { outline: "none" },
                   }}
                 />
@@ -119,7 +136,7 @@ export default function WorldMap() {
         </Geographies>
       </ComposableMap>
 
-      <div className="flex flex-wrap gap-5 px-4 py-3 border-t border-gray-100">
+      <div className="flex flex-wrap gap-5 px-4 py-1 border-t border-gray-100">
         <div className="flex items-center gap-2">
           <span className="w-3 h-3 rounded-sm bg-[#7a0028] inline-block" />
           <span className="text-xs text-gray-400">Been to ({VISITED.size})</span>

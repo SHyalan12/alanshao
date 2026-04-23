@@ -12,7 +12,7 @@ export default function Navbar() {
     <header className="sticky top-0 z-10 bg-white/70 backdrop-blur-sm">
       <nav className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
         <div>
-          <a href="#" className="font-serif text-xl font-bold text-gray-900 leading-tight hover:text-[#003278] transition-colors">
+          <a href="/" className="font-serif text-xl font-bold text-gray-900 leading-tight hover:text-[#003278] transition-colors">
             Alan Shao
           </a>
           <p className="text-xs text-gray-400 mt-0.5 hidden sm:block">Data Science & Finance · Boston University</p>
