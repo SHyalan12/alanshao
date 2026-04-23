@@ -1,33 +1,13 @@
 import Typewriter from "@/components/Typewriter";
+import Link from "next/link";
+import { getHighlightedProjects } from "@/lib/projects";
 
-const projects = [
-  {
-    title: "Progressive Mass: Home Rule Petition",
-    description:
-      "End-to-end data pipeline using the MA Legislature Public API to collect and structure 10 years of petition data. Built a refiling fatigue analysis dashboard to quantify repeated filings and their impact on success rates.",
-    tags: ["Python", "SQL", "Data Pipeline", "API"],
-    href: "https://www.linkedin.com/in/hongyaoshao/overlay/Project/1195618083/treasury/?profileId=ACoAAFJYEjgBric1E2h3quoOjgbC0F9Rw06BwSU",
-  },
-  {
-    title: "Emotion Recognition from Audio",
-    description:
-      "Python/TensorFlow pipeline that transforms raw audio into mel-spectrograms for CNN-based emotion classification. Improved F1 score by 50% over baseline through structured hyperparameter sweeps on speech and song models.",
-    tags: ["Python", "TensorFlow", "CNN", "Librosa"],
-    href: "https://github.com/SHyalan12/Emotion-Recognition-from-Audio-Using-CNN-Based-Spectrogram",
-  },
-  {
-    title: "LLM Article Summarizer",
-    description:
-      "LLM-powered article analyzer exploring how prompt design influences model outputs. Demonstrates the impact of prompt engineering on summarization quality and response variability.",
-    tags: ["Python", "LLM", "NLP", "Prompt Engineering"],
-    href: "https://github.com/SHyalan12/article_summarizer",
-  },
-];
+const highlightedProjects = getHighlightedProjects();
 
 const contactLinks = [
   { label: "GitHub", href: "https://github.com/SHyalan12", display: "github.com/SHyalan12" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/hongyaoshao/", display: "linkedin.com/in/hongyaoshao" },
-  { label: "Email", href: "mailto:hongyaoshao@gmail.com", display: "hongyaoshao@gmail.com" },
+  { label: "Email", href: "mailto:hongyaoshao@gmail.com", display: "hongyaoshao@gmail.com", display2: "shyala@bu.edu", href2: "mailto:shyala@bu.edu" },
 ];
 
 const skills = ["Python", "SQL", "TensorFlow", "Scikit-Learn", "Pandas", "NumPy", "Rust", "Tableau"];
@@ -83,6 +63,9 @@ export default function Home() {
             Technical Project Manager at BU Spark!, and previously an analyst in investment and Web3 contexts.
             I enjoy building side projects that sit at the edge of what I know.
           </p>
+          <p>
+            Outside of work, I&apos;m a travel enthusiast always chasing the next destination, and a big football fan :) Visca Barça !
+          </p>
         </div>
 
         <div className="mb-6">
@@ -114,19 +97,25 @@ export default function Home() {
 
       {/* Projects */}
       <section id="projects" className="py-14 sm:py-20">
-        <h2 className="font-serif text-2xl sm:text-3xl font-bold text-gray-900 mb-8">Projects</h2>
+        <div className="flex items-baseline justify-between mb-8">
+          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-gray-900">Project Highlights</h2>
+          <Link href="/projects" className="text-sm text-gray-400 hover:text-[#003278] transition-colors">
+            View all →
+          </Link>
+        </div>
         <div className="space-y-4">
-          {projects.map((project) => (
-            <a
-              key={project.title}
-              href={project.href}
-              target="_blank"
-              rel="noopener noreferrer"
+          {highlightedProjects.map((project) => (
+            <Link
+              key={project.slug}
+              href={`/projects/${project.slug}`}
               className="block p-6 bg-white/60 backdrop-blur-sm border border-gray-100 rounded-lg hover:border-gray-300 hover:bg-white/80 transition-all group"
             >
-              <h3 className="font-serif text-lg font-semibold text-gray-900 group-hover:text-[#7a0028] transition-colors mb-1">
-                {project.title} →
-              </h3>
+              <div className="flex items-baseline justify-between mb-1">
+                <h3 className="font-serif text-lg font-semibold text-gray-900 group-hover:text-[#7a0028] transition-colors">
+                  {project.title} →
+                </h3>
+                <span className="text-xs text-gray-400 ml-4 shrink-0">{project.period}</span>
+              </div>
               <p className="text-gray-400 text-sm mb-4 leading-relaxed">{project.description}</p>
               <div className="flex flex-wrap gap-2">
                 {project.tags.map((tag) => (
@@ -135,26 +124,53 @@ export default function Home() {
                   </span>
                 ))}
               </div>
-            </a>
+            </Link>
           ))}
         </div>
+      </section>
+
+      {/* Beyond the Screen */}
+      <section id="life" className="py-14 sm:py-20">
+        <h2 className="font-serif text-2xl sm:text-3xl font-bold text-gray-900 mb-4">Beyond the Screen</h2>
+        <p className="text-gray-500 text-sm leading-relaxed mb-4">
+          Life beyond the screen — travels, football, and everything in between.
+        </p>
+        <Link
+          href="/life"
+          className="inline-block px-6 py-2.5 text-gray-600 text-sm tracking-wide rounded border border-gray-200 hover:border-[#003278] hover:text-[#003278] transition-colors"
+        >
+          Take a look →
+        </Link>
       </section>
 
       {/* Contact */}
       <section id="contact" className="py-14 sm:py-20">
         <h2 className="font-serif text-2xl sm:text-3xl font-bold text-gray-900 mb-8">Contact</h2>
         <ul className="space-y-5">
-          {contactLinks.map(({ label, href, display }) => (
-            <li key={label} className="flex items-center gap-6">
-              <span className="w-20 text-xs font-medium text-gray-300 tracking-widest uppercase">{label}</span>
-              <a
-                href={href}
-                className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-                target={href.startsWith("http") ? "_blank" : undefined}
-                rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-              >
-                {display}
-              </a>
+          {contactLinks.map((link) => (
+            <li key={link.label} className="flex items-center gap-6">
+              <span className="w-20 text-xs font-medium text-gray-300 tracking-widest uppercase">{link.label}</span>
+              <div className="flex flex-wrap gap-x-2 text-sm text-gray-600">
+                <a
+                  href={link.href}
+                  className="hover:text-gray-900 transition-colors"
+                  target={link.href.startsWith("http") ? "_blank" : undefined}
+                  rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                >
+                  {link.display}
+                </a>
+                {"href2" in link && (
+                  <>
+                    <span className="text-gray-300 mx-1">|</span>
+                    <a
+                      href={(link as typeof link & { href2: string }).href2}
+                      className="hover:text-gray-900 transition-colors"
+                    >
+                      {(link as typeof link & { display2: string }).display2}
+                    </a>
+                  </>
+                )}
+              </div>
             </li>
           ))}
         </ul>
