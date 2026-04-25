@@ -2,6 +2,8 @@
 
 import { useRef, useState } from "react";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
+import { useLanguage } from "@/components/LanguageContext";
+import { content } from "@/lib/content";
 
 const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 
@@ -54,8 +56,44 @@ const WISHLIST = new Set([
   "704", // Vietnam
   "702", // Singapore
   "484", // Mexico
-  "834", // Tanzania
+  "756", // Switzerland
 ]);
+
+const COUNTRY_NAMES_ZH: Record<string, string> = {
+  "004": "阿富汗", "008": "阿尔巴尼亚", "012": "阿尔及利亚", "024": "安哥拉",
+  "032": "阿根廷", "036": "澳大利亚", "040": "奥地利", "050": "孟加拉国",
+  "056": "比利时", "064": "不丹", "068": "玻利维亚", "072": "博茨瓦纳",
+  "070": "波黑", "076": "巴西", "100": "保加利亚", "104": "缅甸",
+  "112": "白俄罗斯", "116": "柬埔寨", "120": "喀麦隆", "124": "加拿大",
+  "144": "斯里兰卡", "152": "智利", "156": "中国", "158": "中国",
+  "170": "哥伦比亚", "178": "刚果", "180": "刚果民主共和国", "188": "哥斯达黎加",
+  "191": "克罗地亚", "192": "古巴", "203": "捷克", "208": "丹麦",
+  "214": "多米尼加", "218": "厄瓜多尔", "231": "埃塞俄比亚", "233": "爱沙尼亚",
+  "246": "芬兰", "250": "法国", "266": "加蓬", "276": "德国",
+  "288": "加纳", "300": "希腊", "320": "危地马拉", "324": "几内亚",
+  "332": "海地", "340": "洪都拉斯", "348": "匈牙利", "352": "冰岛",
+  "356": "印度", "360": "印度尼西亚", "364": "伊朗", "368": "伊拉克",
+  "372": "爱尔兰", "376": "以色列", "380": "意大利", "384": "科特迪瓦",
+  "388": "牙买加", "392": "日本", "398": "哈萨克斯坦", "400": "约旦",
+  "404": "肯尼亚", "408": "朝鲜", "410": "韩国", "414": "科威特",
+  "418": "老挝", "422": "黎巴嫩", "428": "拉脱维亚", "430": "利比里亚",
+  "434": "利比亚", "440": "立陶宛", "458": "马来西亚", "462": "马尔代夫",
+  "466": "马里", "478": "毛里塔尼亚", "484": "墨西哥", "496": "蒙古",
+  "498": "摩尔多瓦", "499": "黑山", "504": "摩洛哥", "508": "莫桑比克",
+  "516": "纳米比亚", "524": "尼泊尔", "528": "荷兰", "554": "新西兰",
+  "558": "尼加拉瓜", "562": "尼日尔", "566": "尼日利亚", "578": "挪威",
+  "586": "巴基斯坦", "591": "巴拿马", "598": "巴布亚新几内亚", "600": "巴拉圭",
+  "604": "秘鲁", "608": "菲律宾", "616": "波兰", "620": "葡萄牙",
+  "634": "卡塔尔", "642": "罗马尼亚", "643": "俄罗斯", "682": "沙特阿拉伯",
+  "686": "塞内加尔", "688": "塞尔维亚", "702": "新加坡", "703": "斯洛伐克",
+  "704": "越南", "706": "索马里", "710": "南非", "716": "津巴布韦",
+  "724": "西班牙", "728": "南苏丹", "729": "苏丹", "752": "瑞典",
+  "756": "瑞士", "762": "塔吉克斯坦", "764": "泰国", "784": "阿联酋",
+  "788": "突尼斯", "792": "土耳其", "800": "乌干达", "804": "乌克兰",
+  "807": "北马其顿", "818": "埃及", "826": "英国", "834": "坦桑尼亚",
+  "840": "美国", "854": "布基纳法索", "858": "乌拉圭", "860": "乌兹别克斯坦",
+  "862": "委内瑞拉", "887": "也门", "894": "赞比亚",
+};
 
 // Countries that should highlight together as one region
 const MERGED_REGIONS: Record<string, string> = {
@@ -67,6 +105,8 @@ export default function WorldMap() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [tooltip, setTooltip] = useState<{ name: string; x: number; y: number } | null>(null);
   const [hoveredRegion, setHoveredRegion] = useState<string | null>(null);
+  const { lang } = useLanguage();
+  const t = content[lang].life;
 
   const handleMouseMove = (name: string, e: React.MouseEvent) => {
     const rect = containerRef.current?.getBoundingClientRect();
@@ -97,7 +137,7 @@ export default function WorldMap() {
               if (id === "010") return null;
               const visited = VISITED.has(id);
               const wishlist = WISHLIST.has(id);
-              const name = COUNTRY_NAMES[id] ?? "";
+              const name = (lang === "zh" ? COUNTRY_NAMES_ZH[id] : COUNTRY_NAMES[id]) ?? "";
               const region = MERGED_REGIONS[id];
               const isHovered = region ? hoveredRegion === region : false;
               const baseFill = visited ? "#7a0028" : wishlist ? "#f59e0b" : "#003278";
@@ -139,15 +179,15 @@ export default function WorldMap() {
       <div className="flex flex-wrap gap-5 px-4 py-1 border-t border-gray-100">
         <div className="flex items-center gap-2">
           <span className="w-3 h-3 rounded-sm bg-[#7a0028] inline-block" />
-          <span className="text-xs text-gray-400">Been to ({VISITED.size})</span>
+          <span className="text-xs text-gray-400">{t.legendVisited} ({VISITED.size})</span>
         </div>
         <div className="flex items-center gap-2">
           <span className="w-3 h-3 rounded-sm bg-[#f59e0b] inline-block" />
-          <span className="text-xs text-gray-400">Want to go</span>
+          <span className="text-xs text-gray-400">{t.legendWishlist}</span>
         </div>
         <div className="flex items-center gap-2">
           <span className="w-3 h-3 rounded-sm bg-[#003278] inline-block" />
-          <span className="text-xs text-gray-400">Not yet</span>
+          <span className="text-xs text-gray-400">{t.legendNotYet}</span>
         </div>
       </div>
     </div>
