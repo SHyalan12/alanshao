@@ -18,7 +18,12 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const saved = localStorage.getItem("lang");
-    if (saved === "en" || saved === "zh") setLangState(saved);
+    if (saved === "en" || saved === "zh") {
+      setLangState(saved);
+    } else {
+      const browserLang = navigator.language || "";
+      if (browserLang.startsWith("zh")) setLangState("zh");
+    }
   }, []);
 
   const setLang = (l: Lang) => {
