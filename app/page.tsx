@@ -5,6 +5,7 @@ import Link from "next/link";
 import { getHighlightedProjects } from "@/lib/projects";
 import { useLanguage } from "@/components/LanguageContext";
 import { content } from "@/lib/content";
+import ScrollReveal from "@/components/ScrollReveal";
 
 const highlightedProjects = getHighlightedProjects();
 
@@ -57,6 +58,7 @@ export default function Home() {
       </section>
 
       {/* About */}
+      <ScrollReveal>
       <section id="about" className="py-14 sm:py-20">
         <h2 className="font-serif text-2xl sm:text-3xl font-bold text-gray-900 mb-8">{t.about.heading}</h2>
         <div className="space-y-4 text-gray-500 leading-relaxed mb-10">
@@ -98,8 +100,10 @@ export default function Home() {
           ))}
         </div>
       </section>
+      </ScrollReveal>
 
       {/* Projects */}
+      <ScrollReveal>
       <section id="projects" className="py-14 sm:py-20">
         <div className="flex items-baseline justify-between mb-8">
           <h2 className="font-serif text-2xl sm:text-3xl font-bold text-gray-900">{t.projects.highlightsHeading}</h2>
@@ -134,8 +138,10 @@ export default function Home() {
           ))}
         </div>
       </section>
+      </ScrollReveal>
 
       {/* Beyond the Screen */}
+      <ScrollReveal>
       <section id="life" className="py-14 sm:py-20">
         <h2 className="font-serif text-2xl sm:text-3xl font-bold text-gray-900 mb-4">{t.life.sectionHeading}</h2>
         <p className="text-gray-500 text-sm leading-relaxed mb-4">
@@ -148,8 +154,10 @@ export default function Home() {
           {t.life.takeLook}
         </Link>
       </section>
+      </ScrollReveal>
 
       {/* Contact */}
+      <ScrollReveal>
       <section id="contact" className="py-14 sm:py-20">
         <h2 className="font-serif text-2xl sm:text-3xl font-bold text-gray-900 mb-8">{t.contact.heading}</h2>
         <ul className="space-y-5">
@@ -180,6 +188,7 @@ export default function Home() {
           ))}
         </ul>
       </section>
+      </ScrollReveal>
 
     </div>
   );
