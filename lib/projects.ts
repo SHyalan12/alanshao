@@ -14,6 +14,7 @@ export interface Project {
   detail_zh?: string;
   tags: string[];
   href: string;
+  demoHref?: string;
   highlight: boolean;
   period: string;
   completedAt: string; // YYYY-MM for sorting
@@ -81,7 +82,9 @@ One early insight was that song and speech carry emotion very differently, so we
 
 To make the models more robust, we applied data augmentation: adding background noise, shifting pitch, and modifying playback speed to expand the training set and reduce overfitting.
 
-As a fun real-world test, we ran the model on a spectrogram generated from a real lecture recording — a professor saying "please fill out course evaluation when you get back to your dorm." The model's prediction: calm, with 95% confidence.`,
+As a fun real-world test, we ran the model on a spectrogram generated from a real lecture recording — a professor saying "please fill out course evaluation when you get back to your dorm." The model's prediction: calm, with 95% confidence.
+
+The trained model is also deployed as an interactive demo on Hugging Face Spaces — upload your own audio clip and see what the model hears.`,
     detail_zh: `情绪主导着我们的沟通方式——但机器能学会「听懂」情绪吗？本项目训练 CNN 模型，让其直接从音频中识别情绪，无需理解任何文字。
 
 核心思路：将原始音频转化为频谱图——一种可视化的「热力图」，展示声音频率随时间的变化规律。模型通过分析这些图像，学习辨别与愤怒、平静、快乐、悲伤等情绪相关联的声学特征。音频数据来自 RAVDESS 数据集，涵盖歌唱与语音两类。
@@ -90,9 +93,12 @@ As a fun real-world test, we ran the model on a spectrogram generated from a rea
 
 为增强模型鲁棒性，采用了数据增强策略：添加背景噪音、变换音调、调整播放速度，扩充训练集并降低过拟合。
 
-作为趣味测试，我们对一段真实课堂录音生成频谱图并输入模型——内容是教授说"请回宿舍后填写课程评价"。模型的预测结果：平静，置信度 95%。`,
+作为趣味测试，我们对一段真实课堂录音生成频谱图并输入模型——内容是教授说"请回宿舍后填写课程评价"。模型的预测结果：平静，置信度 95%。
+
+训练完成的模型已部署为 Hugging Face Spaces 上的交互式 Demo——上传你自己的音频片段，听听模型「听」到的情绪。`,
     tags: ["Python", "TensorFlow", "CNN", "Librosa"],
     href: "https://github.com/SHyalan12/Emotion-Recognition-from-Audio-Using-CNN-Based-Spectrogram",
+    demoHref: "https://huggingface.co/spaces/shhyalan/emotion-recognition",
     highlight: true,
     period: "Feb 2025 – May 2025",
     completedAt: "2025-05",

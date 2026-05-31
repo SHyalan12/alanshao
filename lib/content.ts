@@ -39,6 +39,7 @@ export const content = {
       back: "← Back",
       allProjectsBack: "← All projects",
       viewProject: "View project →",
+      tryDemo: "Try the demo →",
     },
     life: {
       sectionHeading: "Beyond the Screen",
@@ -98,6 +99,7 @@ export const content = {
       back: "← 返回",
       allProjectsBack: "← 项目列表",
       viewProject: "查看项目 →",
+      tryDemo: "试用 Demo →",
     },
     life: {
       sectionHeading: "屏幕之外",

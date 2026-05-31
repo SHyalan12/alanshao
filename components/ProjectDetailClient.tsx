@@ -55,16 +55,28 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
         </div>
       )}
 
-      {project.href && (
-        <a
-          href={project.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block px-6 py-2.5 bg-[#003278] text-white text-sm tracking-wide rounded hover:bg-[#002060] transition-colors"
-        >
-          {t.viewProject}
-        </a>
-      )}
+      <div className="flex flex-wrap gap-3">
+        {project.href && (
+          <a
+            href={project.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block px-6 py-2.5 bg-[#003278] text-white text-sm tracking-wide rounded hover:bg-[#002060] transition-colors"
+          >
+            {t.viewProject}
+          </a>
+        )}
+        {project.demoHref && (
+          <a
+            href={project.demoHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block px-6 py-2.5 text-gray-600 text-sm tracking-wide rounded border border-gray-200 hover:border-[#003278] hover:text-[#003278] transition-colors"
+          >
+            {t.tryDemo}
+          </a>
+        )}
+      </div>
     </div>
   );
 }
