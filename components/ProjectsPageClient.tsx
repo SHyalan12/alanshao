@@ -11,12 +11,13 @@ export default function ProjectsPageClient() {
 
   return (
     <div className="max-w-2xl mx-auto px-6 py-14 sm:py-20">
-      <div className="flex items-baseline justify-between mb-8">
+      <div className="flex items-baseline justify-between mb-2">
         <h1 className="font-serif text-2xl sm:text-3xl font-bold text-gray-900">{t.allHeading}</h1>
         <Link href="/#projects" className="text-sm text-gray-400 hover:text-[#003278] transition-colors">
           {t.back}
         </Link>
       </div>
+      <p className="text-xs text-gray-400 mb-8">{t.sortedChronologically}</p>
       <div className="space-y-4">
         {sortedProjects.map((project) => (
           <Link

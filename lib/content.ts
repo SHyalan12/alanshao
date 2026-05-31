@@ -40,6 +40,7 @@ export const content = {
       allProjectsBack: "← All projects",
       viewProject: "View project →",
       tryDemo: "Try the demo →",
+      sortedChronologically: "Listed chronologically",
     },
     life: {
       sectionHeading: "Beyond the Screen",
@@ -100,6 +101,7 @@ export const content = {
       allProjectsBack: "← 项目列表",
       viewProject: "查看项目 →",
       tryDemo: "试用 Demo →",
+      sortedChronologically: "按时间倒序排列",
     },
     life: {
       sectionHeading: "屏幕之外",

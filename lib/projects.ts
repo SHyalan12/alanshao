@@ -16,12 +16,39 @@ export interface Project {
   href: string;
   demoHref?: string;
   highlight: boolean;
+  highlightOrder?: number; // lower = earlier in homepage highlights
   period: string;
   completedAt: string; // YYYY-MM for sorting
   images?: ProjectImage[];
 }
 
 export const projects: Project[] = [
+  {
+    slug: "bcan-boston-heating",
+    title: "Boston Building Heating Systems: BCAN Data Integration",
+    title_zh: "波士顿建筑供暖系统：BCAN 数据整合",
+    description:
+      "Building-level dataset integrating three City of Boston public datasets to infer heating systems, paired with a client-facing property map that helps BCAN identify high-emission buildings for decarbonization outreach.",
+    description_zh:
+      "整合波士顿市三套公开数据集，构建建筑级别的供暖系统推断数据集，并配套一个面向客户的房产地图，帮助 BCAN 识别高排放建筑，推动脱碳外展工作。",
+    detail: `Created a building-level dataset for heating-system inference by integrating three City of Boston public datasets using Python and pandas, with parcel ID matching and address standardization to reconcile records across sources that don't share a common key.
+
+Screened unstructured permit comments with a hybrid of keyword rules and API-based LLM prompts, surfacing records tied to heating installation, replacement, upgrade, and fuel conversion — turning free-text permit notes into structured signals.
+
+Designed a client-facing Boston property map with search, filters, and exportable results, helping the Boston Climate Action Network (BCAN) identify likely high-emission heating systems and target buildings for decarbonization outreach.`,
+    detail_zh: `使用 Python 与 pandas 整合波士顿市三套公开数据集，通过地块 ID 匹配与地址标准化，将缺乏统一主键的多源记录对齐，构建出建筑级别的供暖系统推断数据集。
+
+针对非结构化的施工许可备注，结合关键词规则与基于 API 的大语言模型提示，筛选出涉及供暖系统安装、更换、升级与燃料转换的记录，将自由文本转化为结构化信号。
+
+设计了一套面向客户的波士顿房产地图，支持搜索、筛选与结果导出，帮助 Boston Climate Action Network（BCAN）识别可能的高排放供暖建筑，为脱碳外展工作精准定位目标。`,
+    tags: ["Python", "LLM", "Data Integration", "Data Visualization"],
+    href: "",
+    demoHref: "https://bcan.vercel.app/",
+    highlight: true,
+    highlightOrder: 3,
+    period: "Jan 2026 – May 2026",
+    completedAt: "2026-05",
+  },
   {
     slug: "progressive-mass",
     title: "Progressive Mass: Home Rule Petition",
@@ -43,6 +70,7 @@ Due to data closure restrictions, the linked page shows only the project poster 
     tags: ["Python", "SQL", "Data Pipeline", "API"],
     href: "https://www.linkedin.com/in/hongyaoshao/overlay/Project/1195618083/treasury/?profileId=ACoAAFJYEjgBric1E2h3quoOjgbC0F9Rw06BwSU",
     highlight: true,
+    highlightOrder: 2,
     period: "Sep 2025 – Dec 2025",
     completedAt: "2025-12",
   },
@@ -62,7 +90,7 @@ The project demonstrates concrete differences between naive and engineered promp
 实验结果表明，精心设计的提示词与随意的提示词之间存在显著差距：带有明确角色指令和输出模板的结构化提示，相比开放式提示，能持续生成更准确、更稳定的摘要。`,
     tags: ["Python", "LLM", "NLP", "Prompt Engineering"],
     href: "https://github.com/SHyalan12/article_summarizer",
-    highlight: true,
+    highlight: false,
     period: "Nov 2025",
     completedAt: "2025-11",
   },
@@ -100,6 +128,7 @@ The trained model is also deployed as an interactive demo on Hugging Face Spaces
     href: "https://github.com/SHyalan12/Emotion-Recognition-from-Audio-Using-CNN-Based-Spectrogram",
     demoHref: "https://huggingface.co/spaces/shhyalan/emotion-recognition",
     highlight: true,
+    highlightOrder: 1,
     period: "Feb 2025 – May 2025",
     completedAt: "2025-05",
     images: [
@@ -171,5 +200,5 @@ export function getProjectBySlug(slug: string): Project | undefined {
 export function getHighlightedProjects(): Project[] {
   return [...projects]
     .filter((p) => p.highlight)
-    .sort((a, b) => b.completedAt.localeCompare(a.completedAt));
+    .sort((a, b) => (a.highlightOrder ?? 999) - (b.highlightOrder ?? 999));
 }
