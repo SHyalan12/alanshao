@@ -3,6 +3,7 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLanguage } from "@/components/LanguageContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -26,6 +27,7 @@ export default function ScrollReveal({
   className,
 }: ScrollRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const { lang } = useLanguage();
 
   useEffect(() => {
     const el = ref.current;
@@ -51,6 +53,7 @@ export default function ScrollReveal({
             trigger: el,
             start,
             toggleActions: once ? "play none none none" : "play none none reverse",
+            invalidateOnRefresh: true,
           },
         }
       );
@@ -58,6 +61,11 @@ export default function ScrollReveal({
 
     return () => ctx.revert();
   }, [y, duration, delay, start, once]);
+
+  useEffect(() => {
+    const id = window.setTimeout(() => ScrollTrigger.refresh(), 50);
+    return () => window.clearTimeout(id);
+  }, [lang]);
 
   return (
     <div ref={ref} className={className} style={{ opacity: 0 }}>

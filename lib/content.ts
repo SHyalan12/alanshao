@@ -73,7 +73,7 @@ export const content = {
     },
     hero: {
       greeting: "👋  你好，我是邵泓耀",
-      subtitle: "Alan",
+      subtitle: "Alan Shao",
       bio: "波士顿大学在读，数据科学与工商管理双学位。专注于数据、技术与商业决策的交叉领域。",
       viewWork: "查看我的项目",
       resume: "简历",
